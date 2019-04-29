@@ -23,9 +23,27 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Alumnos", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $alumno;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+    public function getAlumno(): ?Alumnos
+    {
+        return $this->alumno;
+    }
+
+    public function setAlumno(?Alumnos $alumno): self
+    {
+        $this->alumno = $alumno;
+
+        return $this;
     }
 }

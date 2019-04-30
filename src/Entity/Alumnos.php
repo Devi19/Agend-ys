@@ -69,24 +69,14 @@ class Alumnos
     private $recordatorios;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="alumno")
-     */
-    private $users;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Wiki", mappedBy="alumnos")
      */
     private $wikis;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Alumnos", inversedBy="MisAmigos")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Alumnos", inversedBy="alumnos")
      */
     private $amigos;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Alumnos", mappedBy="amigos")
-     */
-    private $MisAmigos;
 
     public function __construct()
     {
@@ -96,10 +86,8 @@ class Alumnos
         $this->calificaciones = new ArrayCollection();
         $this->recursos = new ArrayCollection();
         $this->recordatorios = new ArrayCollection();
-        $this->users = new ArrayCollection();
         $this->wikis = new ArrayCollection();
         $this->amigos = new ArrayCollection();
-        $this->MisAmigos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -336,37 +324,6 @@ class Alumnos
     }
 
     /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setAlumno($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getAlumno() === $this) {
-                $user->setAlumno(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Wiki[]
      */
     public function getWikis(): Collection
@@ -415,34 +372,6 @@ class Alumnos
     {
         if ($this->amigos->contains($amigo)) {
             $this->amigos->removeElement($amigo);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getMisAmigos(): Collection
-    {
-        return $this->MisAmigos;
-    }
-
-    public function addMisAmigo(self $misAmigo): self
-    {
-        if (!$this->MisAmigos->contains($misAmigo)) {
-            $this->MisAmigos[] = $misAmigo;
-            $misAmigo->addAmigo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMisAmigo(self $misAmigo): self
-    {
-        if ($this->MisAmigos->contains($misAmigo)) {
-            $this->MisAmigos->removeElement($misAmigo);
-            $misAmigo->removeAmigo($this);
         }
 
         return $this;

@@ -24,7 +24,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alumnos", inversedBy="users")
+     * @ORM\OneToOne(targetEntity="App\Entity\Alumnos", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $alumno;
@@ -40,7 +40,7 @@ class User extends BaseUser
         return $this->alumno;
     }
 
-    public function setAlumno(?Alumnos $alumno): self
+    public function setAlumno(Alumnos $alumno): self
     {
         $this->alumno = $alumno;
 

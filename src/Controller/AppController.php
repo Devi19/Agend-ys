@@ -13,6 +13,6 @@ class AppController extends Controller
      */
     public function index()
     {
-        return $this->redirectToRoute('admin_page');
+        return $this->redirectToRoute('app_login');
     }
 }

@@ -5,42 +5,59 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\HorariosRepository")
+ * Horarios
+ *
+ * @ORM\Table(name="horarios", indexes={@ORM\Index(name="IDX_5433650A7C1D59C9", columns={"id_alumno_id"})})
+ * @ORM\Entity
  */
 class Horarios
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="time")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="hora_inicio", type="time", nullable=false)
      */
-    private $hora_inicio;
+    private $horaInicio;
 
     /**
-     * @ORM\Column(type="time")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="hora_final", type="time", nullable=false)
      */
-    private $hora_final;
+    private $horaFinal;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="dia", type="integer", nullable=false)
      */
     private $dia;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="actividad", type="string", length=255, nullable=false)
      */
     private $actividad;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\alumnos", inversedBy="horarios")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Alumnos
+     *
+     * @ORM\ManyToOne(targetEntity="Alumnos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_alumno_id", referencedColumnName="id")
+     * })
      */
-    private $id_alumno;
+    private $idAlumno;
 
     public function getId(): ?int
     {
@@ -49,24 +66,24 @@ class Horarios
 
     public function getHoraInicio(): ?\DateTimeInterface
     {
-        return $this->hora_inicio;
+        return $this->horaInicio;
     }
 
-    public function setHoraInicio(\DateTimeInterface $hora_inicio): self
+    public function setHoraInicio(\DateTimeInterface $horaInicio): self
     {
-        $this->hora_inicio = $hora_inicio;
+        $this->horaInicio = $horaInicio;
 
         return $this;
     }
 
     public function getHoraFinal(): ?\DateTimeInterface
     {
-        return $this->hora_final;
+        return $this->horaFinal;
     }
 
-    public function setHoraFinal(\DateTimeInterface $hora_final): self
+    public function setHoraFinal(\DateTimeInterface $horaFinal): self
     {
-        $this->hora_final = $hora_final;
+        $this->horaFinal = $horaFinal;
 
         return $this;
     }
@@ -95,15 +112,17 @@ class Horarios
         return $this;
     }
 
-    public function getIdAlumno(): ?alumnos
+    public function getIdAlumno(): ?Alumnos
     {
-        return $this->id_alumno;
+        return $this->idAlumno;
     }
 
-    public function setIdAlumno(?alumnos $id_alumno): self
+    public function setIdAlumno(?Alumnos $idAlumno): self
     {
-        $this->id_alumno = $id_alumno;
+        $this->idAlumno = $idAlumno;
 
         return $this;
     }
+
+
 }

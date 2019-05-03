@@ -5,49 +5,72 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RecordatoriosRepository")
+ * Recordatorios
+ *
+ * @ORM\Table(name="recordatorios", indexes={@ORM\Index(name="IDX_D4A59CFB54DBBCB", columns={"materia_id"}), @ORM\Index(name="IDX_D4A59CFFC28E5EE", columns={"alumno_id"}), @ORM\Index(name="IDX_D4A59CF3397707A", columns={"categoria_id"})})
+ * @ORM\Entity
  */
 class Recordatorios
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255, nullable=false)
      */
     private $titulo;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
      */
     private $descripcion;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime", nullable=false)
      */
     private $fecha;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alumnos", inversedBy="recordatorios")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Categorias
+     *
+     * @ORM\ManyToOne(targetEntity="Categorias")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     * })
      */
-    private $alumno;
+    private $categoria;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Materias", inversedBy="recordatorios")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Materias
+     *
+     * @ORM\ManyToOne(targetEntity="Materias")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="materia_id", referencedColumnName="id")
+     * })
      */
     private $materia;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categorias", inversedBy="recordatorios")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Alumnos
+     *
+     * @ORM\ManyToOne(targetEntity="Alumnos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
+     * })
      */
-    private $categoria;
+    private $alumno;
 
     public function getId(): ?int
     {
@@ -90,14 +113,14 @@ class Recordatorios
         return $this;
     }
 
-    public function getAlumno(): ?Alumnos
+    public function getCategoria(): ?Categorias
     {
-        return $this->alumno;
+        return $this->categoria;
     }
 
-    public function setAlumno(?Alumnos $alumno): self
+    public function setCategoria(?Categorias $categoria): self
     {
-        $this->alumno = $alumno;
+        $this->categoria = $categoria;
 
         return $this;
     }
@@ -114,15 +137,17 @@ class Recordatorios
         return $this;
     }
 
-    public function getCategoria(): ?Categorias
+    public function getAlumno(): ?Alumnos
     {
-        return $this->categoria;
+        return $this->alumno;
     }
 
-    public function setCategoria(?Categorias $categoria): self
+    public function setAlumno(?Alumnos $alumno): self
     {
-        $this->categoria = $categoria;
+        $this->alumno = $alumno;
 
         return $this;
     }
+
+
 }

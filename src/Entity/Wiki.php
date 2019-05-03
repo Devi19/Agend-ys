@@ -7,46 +7,74 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\WikiRepository")
+ * Wiki
+ *
+ * @ORM\Table(name="wiki", indexes={@ORM\Index(name="IDX_22CDDC06B54DBBCB", columns={"materia_id"})})
+ * @ORM\Entity
  */
 class Wiki
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255, nullable=false)
      */
     private $titulo;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="cuerpo", type="text", length=0, nullable=false)
      */
     private $cuerpo;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="hashtag", type="string", length=255, nullable=true)
      */
     private $hashtag;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Alumnos", inversedBy="wikis")
+     * @var \Materias
+     *
+     * @ORM\ManyToOne(targetEntity="Materias")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="materia_id", referencedColumnName="id")
+     * })
+     */
+    private $materia;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Alumnos", inversedBy="wiki")
+     * @ORM\JoinTable(name="wiki_alumnos",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="wiki_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="alumnos_id", referencedColumnName="id")
+     *   }
+     * )
      */
     private $alumnos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Materias", inversedBy="wikis")
-     * @ORM\JoinColumn(nullable=false)
+     * Constructor
      */
-    private $materia;
-
     public function __construct()
     {
-        $this->alumnos = new ArrayCollection();
+        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,6 +118,18 @@ class Wiki
         return $this;
     }
 
+    public function getMateria(): ?Materias
+    {
+        return $this->materia;
+    }
+
+    public function setMateria(?Materias $materia): self
+    {
+        $this->materia = $materia;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Alumnos[]
      */
@@ -116,15 +156,4 @@ class Wiki
         return $this;
     }
 
-    public function getMateria(): ?Materias
-    {
-        return $this->materia;
-    }
-
-    public function setMateria(?Materias $materia): self
-    {
-        $this->materia = $materia;
-
-        return $this;
-    }
 }

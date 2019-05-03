@@ -24,3 +24,4 @@
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+/nbproject/private/

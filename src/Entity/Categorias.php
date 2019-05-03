@@ -2,41 +2,38 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoriasRepository")
+ * Categorias
+ *
+ * @ORM\Table(name="categorias")
+ * @ORM\Entity
  */
 class Categorias
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
      */
     private $descripcion;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recordatorios", mappedBy="categoria")
-     */
-    private $recordatorios;
-
-    public function __construct()
-    {
-        $this->recordatorios = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -67,34 +64,5 @@ class Categorias
         return $this;
     }
 
-    /**
-     * @return Collection|Recordatorios[]
-     */
-    public function getRecordatorios(): Collection
-    {
-        return $this->recordatorios;
-    }
 
-    public function addRecordatorio(Recordatorios $recordatorio): self
-    {
-        if (!$this->recordatorios->contains($recordatorio)) {
-            $this->recordatorios[] = $recordatorio;
-            $recordatorio->setCategoria($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecordatorio(Recordatorios $recordatorio): self
-    {
-        if ($this->recordatorios->contains($recordatorio)) {
-            $this->recordatorios->removeElement($recordatorio);
-            // set the owning side to null (unless already changed)
-            if ($recordatorio->getCategoria() === $this) {
-                $recordatorio->setCategoria(null);
-            }
-        }
-
-        return $this;
-    }
 }

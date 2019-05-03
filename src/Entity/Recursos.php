@@ -5,43 +5,62 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RecursosRepository")
+ * Recursos
+ *
+ * @ORM\Table(name="recursos", indexes={@ORM\Index(name="IDX_5163D17DB54DBBCB", columns={"materia_id"}), @ORM\Index(name="IDX_5163D17DFC28E5EE", columns={"alumno_id"})})
+ * @ORM\Entity
  */
 class Recursos
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @var string
+     *
+     * @ORM\Column(name="tipos_archivo", type="string", length=10, nullable=false)
      */
-    private $tipos_archivo;
+    private $tiposArchivo;
 
     /**
-     * @ORM\Column(type="float")
+     * @var float
+     *
+     * @ORM\Column(name="tamano", type="float", precision=10, scale=0, nullable=false)
      */
     private $tamano;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
     private $nombre;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alumnos", inversedBy="recursos")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $alumno;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Materias", inversedBy="recursos")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Materias
+     *
+     * @ORM\ManyToOne(targetEntity="Materias")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="materia_id", referencedColumnName="id")
+     * })
      */
     private $materia;
+
+    /**
+     * @var \Alumnos
+     *
+     * @ORM\ManyToOne(targetEntity="Alumnos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
+     * })
+     */
+    private $alumno;
 
     public function getId(): ?int
     {
@@ -50,12 +69,12 @@ class Recursos
 
     public function getTiposArchivo(): ?string
     {
-        return $this->tipos_archivo;
+        return $this->tiposArchivo;
     }
 
-    public function setTiposArchivo(string $tipos_archivo): self
+    public function setTiposArchivo(string $tiposArchivo): self
     {
-        $this->tipos_archivo = $tipos_archivo;
+        $this->tiposArchivo = $tiposArchivo;
 
         return $this;
     }
@@ -84,6 +103,18 @@ class Recursos
         return $this;
     }
 
+    public function getMateria(): ?Materias
+    {
+        return $this->materia;
+    }
+
+    public function setMateria(?Materias $materia): self
+    {
+        $this->materia = $materia;
+
+        return $this;
+    }
+
     public function getAlumno(): ?Alumnos
     {
         return $this->alumno;
@@ -96,15 +127,5 @@ class Recursos
         return $this;
     }
 
-    public function getMateria(): ?Materias
-    {
-        return $this->materia;
-    }
 
-    public function setMateria(?Materias $materia): self
-    {
-        $this->materia = $materia;
-
-        return $this;
-    }
 }

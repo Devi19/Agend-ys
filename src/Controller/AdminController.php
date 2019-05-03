@@ -12,10 +12,10 @@ class AdminController extends Controller
      * @Route("/admin", name="admin_page")
      * @return Response
      */
-    public function default()
-    {
-        return $this->render("dashboard.html.twig");
-    }
+//    public function default()
+//    {
+//        return $this->render("dashboard.html.twig");
+//    }
 
     /**
      * @Route("admin/{pageName}", name="admin_default")

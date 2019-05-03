@@ -7,59 +7,57 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MateriasRepository")
+ * Materias
+ *
+ * @ORM\Table(name="materias")
+ * @ORM\Entity
  */
 class Materias
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
      */
     private $descripcion;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\alumnos", inversedBy="materias")
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Alumnos", inversedBy="materias")
+     * @ORM\JoinTable(name="materias_alumnos",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="materias_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="alumnos_id", referencedColumnName="id")
+     *   }
+     * )
      */
-    private $id_alumno;
+    private $alumnos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Calificaciones", mappedBy="materia")
+     * Constructor
      */
-    private $calificaciones;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recursos", mappedBy="materia")
-     */
-    private $recursos;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recordatorios", mappedBy="materia")
-     */
-    private $recordatorios;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Wiki", mappedBy="materia")
-     */
-    private $wikis;
-
     public function __construct()
     {
-        $this->id_alumno = new ArrayCollection();
-        $this->calificaciones = new ArrayCollection();
-        $this->recursos = new ArrayCollection();
-        $this->recordatorios = new ArrayCollection();
-        $this->wikis = new ArrayCollection();
+        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,152 +90,29 @@ class Materias
     }
 
     /**
-     * @return Collection|alumnos[]
+     * @return Collection|Alumnos[]
      */
-    public function getIdAlumno(): Collection
+    public function getAlumnos(): Collection
     {
-        return $this->id_alumno;
+        return $this->alumnos;
     }
 
-    public function addIdAlumno(alumnos $idAlumno): self
+    public function addAlumno(Alumnos $alumno): self
     {
-        if (!$this->id_alumno->contains($idAlumno)) {
-            $this->id_alumno[] = $idAlumno;
+        if (!$this->alumnos->contains($alumno)) {
+            $this->alumnos[] = $alumno;
         }
 
         return $this;
     }
 
-    public function removeIdAlumno(alumnos $idAlumno): self
+    public function removeAlumno(Alumnos $alumno): self
     {
-        if ($this->id_alumno->contains($idAlumno)) {
-            $this->id_alumno->removeElement($idAlumno);
+        if ($this->alumnos->contains($alumno)) {
+            $this->alumnos->removeElement($alumno);
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|Calificaciones[]
-     */
-    public function getCalificaciones(): Collection
-    {
-        return $this->calificaciones;
-    }
-
-    public function addCalificacione(Calificaciones $calificacione): self
-    {
-        if (!$this->calificaciones->contains($calificacione)) {
-            $this->calificaciones[] = $calificacione;
-            $calificacione->setMateria($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCalificacione(Calificaciones $calificacione): self
-    {
-        if ($this->calificaciones->contains($calificacione)) {
-            $this->calificaciones->removeElement($calificacione);
-            // set the owning side to null (unless already changed)
-            if ($calificacione->getMateria() === $this) {
-                $calificacione->setMateria(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Recursos[]
-     */
-    public function getRecursos(): Collection
-    {
-        return $this->recursos;
-    }
-
-    public function addRecurso(Recursos $recurso): self
-    {
-        if (!$this->recursos->contains($recurso)) {
-            $this->recursos[] = $recurso;
-            $recurso->setMateria($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecurso(Recursos $recurso): self
-    {
-        if ($this->recursos->contains($recurso)) {
-            $this->recursos->removeElement($recurso);
-            // set the owning side to null (unless already changed)
-            if ($recurso->getMateria() === $this) {
-                $recurso->setMateria(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Recordatorios[]
-     */
-    public function getRecordatorios(): Collection
-    {
-        return $this->recordatorios;
-    }
-
-    public function addRecordatorio(Recordatorios $recordatorio): self
-    {
-        if (!$this->recordatorios->contains($recordatorio)) {
-            $this->recordatorios[] = $recordatorio;
-            $recordatorio->setMateria($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecordatorio(Recordatorios $recordatorio): self
-    {
-        if ($this->recordatorios->contains($recordatorio)) {
-            $this->recordatorios->removeElement($recordatorio);
-            // set the owning side to null (unless already changed)
-            if ($recordatorio->getMateria() === $this) {
-                $recordatorio->setMateria(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Wiki[]
-     */
-    public function getWikis(): Collection
-    {
-        return $this->wikis;
-    }
-
-    public function addWiki(Wiki $wiki): self
-    {
-        if (!$this->wikis->contains($wiki)) {
-            $this->wikis[] = $wiki;
-            $wiki->setMateria($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWiki(Wiki $wiki): self
-    {
-        if ($this->wikis->contains($wiki)) {
-            $this->wikis->removeElement($wiki);
-            // set the owning side to null (unless already changed)
-            if ($wiki->getMateria() === $this) {
-                $wiki->setMateria(null);
-            }
-        }
-
-        return $this;
-    }
 }

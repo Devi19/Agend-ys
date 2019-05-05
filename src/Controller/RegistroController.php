@@ -18,56 +18,73 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class RegistroController extends AbstractController
-{
-    /**
-     * @Route("/registro", name="registro")
-     */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response {
-        $alumno = new Alumnos();
+class RegistroController extends AbstractController {
 
-        $form = $this->createFormBuilder($alumno)
-                ->add('nombre', TextType::class)
-                ->add('apellidos', TextType::class)
-                ->add('email', EmailType::class)
-                ->add('password', PasswordType::class, [
-                    'mapped' => false,
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Por favor ingrese una contraseña',
-                                ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Su contraseña debe tener al menos {{ limit }} caracteres',
-                            'max' => 4096,
-                                ]),
-                    ],
-                ])
-                ->add('save', SubmitType::class, ['label' => 'Enviar'])
-                ->getForm();
+	/**
+	 * @Route("/registro", name="registro")
+	 */
+	public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response {
+		$alumno = new Alumnos();
 
-        $form->handleRequest($request);
+		$form = $this->createFormBuilder($alumno)
+				->add('nombre', TextType::class)
+				->add('apellidos', TextType::class)
+				->add('email', EmailType::class)
+				->add('password', PasswordType::class, [
+					'mapped' => false,
+					'constraints' => [
+						new NotBlank([
+							'message' => 'Por favor ingrese una contraseña',
+								]),
+						new Length([
+							'min' => 6,
+							'minMessage' => 'Su contraseña debe tener al menos {{ limit }} caracteres',
+							'max' => 4096,
+								]),
+					],
+				])
+				->add('save', SubmitType::class, ['label' => 'Enviar'])
+				->getForm();
 
-        if ($form->isSubmitted() && $form->isValid()) {			
-            $alumno = $form->getData();
+		$form->handleRequest($request);
 
-            $alumno->setPassword(
-                    $passwordEncoder->encodePassword(
-                            $alumno,
-                            $form->get('password')->getData()
-                    )
-            );
-            $alumno->setRole('ROLE_USER');
+		$error = null;
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($alumno);
-            $em->flush();
+		if ($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('app_login');
-        }
-		
-        return $this->render('registro/registro.html.twig', [
-                    'form' => $form->createView(),					
-        ]);
-    }
+
+			//Comprobar que el email no exista
+			$email = $form->get('email')->getData();
+
+
+			$repo = $this->getDoctrine()->getRepository(Alumnos::class);
+			$status = $repo->findOneBy(['email' => $email]);
+//			dump($status);
+//			die();
+			if (!$status) {			
+				
+				$alumno = $form->getData();
+				$alumno->setPassword(
+						$passwordEncoder->encodePassword(
+								$alumno, $form->get('password')->getData()
+						)
+				);
+				$alumno->setRole('ROLE_USER');
+
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($alumno);
+				$em->flush();
+
+				return $this->redirectToRoute('app_login');
+			} else {
+				$error = '¡El email ya existe, por favor ingrese otro email!';
+			}
+		}
+
+		return $this->render('registro/registro.html.twig', [
+					'form' => $form->createView(),
+					'error' => $error,
+		]);
+	}
+
 }

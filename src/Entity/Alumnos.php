@@ -131,7 +131,7 @@ class Alumnos implements UserInterface
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): string
+    public function setNombre(string $nombre)
     {
         $this->nombre = $nombre;
 
@@ -162,7 +162,7 @@ class Alumnos implements UserInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -174,7 +174,7 @@ class Alumnos implements UserInterface
         return $this;
     }
 
-    public function getFoto(): string
+    public function getFoto()
     {
         return $this->foto;
     }
@@ -186,7 +186,7 @@ class Alumnos implements UserInterface
         return $this;
     }
 
-    public function getRole(): string
+    public function getRole()
     {
         return $this->role;
     }

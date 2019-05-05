@@ -52,17 +52,12 @@ class RegistroController extends AbstractController {
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-
 			//Comprobar que el email no exista
 			$email = $form->get('email')->getData();
-
-
 			$repo = $this->getDoctrine()->getRepository(Alumnos::class);
 			$status = $repo->findOneBy(['email' => $email]);
-//			dump($status);
-//			die();
-			if (!$status) {			
-				
+			
+			if (!$status) {							
 				$alumno = $form->getData();
 				$alumno->setPassword(
 						$passwordEncoder->encodePassword(

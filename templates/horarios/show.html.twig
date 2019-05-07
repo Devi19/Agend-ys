@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Horarios{% endblock %}
+
+{% block body %}
+    <h1>Horarios</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ horario.id }}</td>
+            </tr>
+            <tr>
+                <th>HoraInicio</th>
+                <td>{{ horario.horaInicio ? horario.horaInicio|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>HoraFinal</th>
+                <td>{{ horario.horaFinal ? horario.horaFinal|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Dia</th>
+                <td>{{ horario.dia }}</td>
+            </tr>
+            <tr>
+                <th>Actividad</th>
+                <td>{{ horario.actividad }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('horarios_index') }}">back to list</a>
+
+    <a href="{{ path('horarios_edit', {'id': horario.id}) }}">edit</a>
+
+    {{ include('horarios/_delete_form.html.twig') }}
+{% endblock %}

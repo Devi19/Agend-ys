@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Horarios{% endblock %}
+
+{% block body %}
+    <h1>Create new Horarios</h1>
+
+    {{ include('horarios/_form.html.twig') }}
+
+    <a href="{{ path('horarios_index') }}"><i class='fa fa-reply-all fa-2x'></i></a>
+{% endblock %}

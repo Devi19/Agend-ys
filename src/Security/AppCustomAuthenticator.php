@@ -65,7 +65,7 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         $user = $this->entityManager->getRepository(Alumnos::class)->findOneBy(['email' => $credentials['email']]);
-
+        
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email no encontrado.');

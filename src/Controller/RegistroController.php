@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class RegistroController extends AbstractController {
 
@@ -51,8 +52,7 @@ class RegistroController extends AbstractController {
 		$error = null;
 
 		if ($form->isSubmitted() && $form->isValid()) {
-
-			//Comprobar que el email no exista
+			//Comprobar que el email no se repita
 			$email = $form->get('email')->getData();
 			$repo = $this->getDoctrine()->getRepository(Alumnos::class);
 			$status = $repo->findOneBy(['email' => $email]);
@@ -72,7 +72,7 @@ class RegistroController extends AbstractController {
 
 				return $this->redirectToRoute('app_login');
 			} else {
-				$error = '¡El email ya existe, por favor ingrese otro email!';
+				$error = '¡El usuario ya existe, por favor ingrese otro email!';
 			}
 		}
 

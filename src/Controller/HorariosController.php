@@ -31,21 +31,7 @@ class HorariosController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/prueba", name="horarios_prueba", methods={"GET"})
-     */
-    public function prueba(): Response
-    {
-        $horarios = $this->getDoctrine()
-            ->getRepository(Horarios::class)
-            ->findAll();
-
-        
-        return $this->render('horarios/index.html.twig', [
-            'horarios' => $horarios,
-        ]);
-    }
-
+    
     /**
      * @Route("/new", name="horarios_new", methods={"GET","POST"})
      */
@@ -60,7 +46,7 @@ class HorariosController extends AbstractController
             $entityManager->persist($horario);
             $entityManager->flush();
 
-            return $this->redirectToRoute('horarios_index');
+            return $this->redirectToRoute('horarios_new');
         }
 
         return $this->render('horarios/new.html.twig', [

@@ -30,13 +30,7 @@ class Materias
      */
     private $nombre;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
-     */
-    private $descripcion;
-
+    
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -77,18 +71,7 @@ class Materias
         return $this;
     }
 
-    public function getDescripcion(): ?string
-    {
-        return $this->descripcion;
-    }
-
-    public function setDescripcion(?string $descripcion): self
-    {
-        $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection|Alumnos[]
      */

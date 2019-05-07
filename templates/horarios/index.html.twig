@@ -19,6 +19,7 @@
                                         <th>Miercoles</th>                                        
                                         <th>Jueves</th>
                                         <th>Viernes</th>
+                                        <th>actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id='tbody'>
@@ -61,7 +62,6 @@
                                                 <td></td>
                                                 <td>{{horario.actividad}}</td>
                                             {% endif %}                               
-                                                                      
                                             <td>                                                
                                                 <a href="{{ path('horarios_edit', {'id': horario.id}) }}"><i class='fa fa-pencil fa-lg'></i></a>
                                                 <a class= 'btn btn danger' href="{{ path('horarios_delete', {'id': horario.id}) }}"><i class='fa fa-trash-o fa-lg'></i></a>
@@ -69,7 +69,7 @@
                                         </tr>
                                     {% else %}
                                         <tr>
-                                            <td colspan="7">¡No has creado ningún horario!</td>
+                                            <td colspan="8">¡No has creado ningún horario!</td>
                                         </tr>
                                     {% endfor %}                                                   
                                 </tbody>
@@ -81,14 +81,11 @@
             </div>
         </div>
 
-    </main>
-
+    </main>    
 {% endblock %}
 
-{% block javascripts %}
-<script>
-</script>
-{% endblock %}
+
+
 
 
 

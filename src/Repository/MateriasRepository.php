@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Materias|null findOneBy(array $criteria, array $orderBy = null)
  * @method Materias[]    findAll()
  * @method Materias[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
+*/
 class MateriasRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
@@ -19,22 +19,25 @@ class MateriasRepository extends ServiceEntityRepository
         parent::__construct($registry, Materias::class);
     }
 
-    // /**
-    //  * @return Materias[] Returns an array of Materias objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+	
+	
+//	
+//     /**
+//      * @return Materias[] Returns an array of Materias objects
+//     */
+//    
+//    public function findByid($value)
+//    {
+//        return $this->createQueryBuilder('m')
+//            ->andWhere('m.id = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('m.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
+//    
 
     /*
     public function findOneBySomeField($value): ?Materias

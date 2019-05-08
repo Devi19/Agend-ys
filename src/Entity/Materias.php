@@ -54,12 +54,12 @@ class Materias
         $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getNombre()
     {
         return $this->nombre;
     }

@@ -77,12 +77,12 @@ class Wiki
         $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getTitulo(): ?string
+    public function getTitulo()
     {
         return $this->titulo;
     }
@@ -94,7 +94,7 @@ class Wiki
         return $this;
     }
 
-    public function getCuerpo(): ?string
+    public function getCuerpo()
     {
         return $this->cuerpo;
     }
@@ -106,24 +106,24 @@ class Wiki
         return $this;
     }
 
-    public function getHashtag(): ?string
+    public function getHashtag()
     {
         return $this->hashtag;
     }
 
-    public function setHashtag(?string $hashtag): self
+    public function setHashtag(string $hashtag): self
     {
         $this->hashtag = $hashtag;
 
         return $this;
     }
 
-    public function getMateria(): ?Materias
+    public function getMateria(): Materias
     {
         return $this->materia;
     }
 
-    public function setMateria(?Materias $materia): self
+    public function setMateria(Materias $materia): self
     {
         $this->materia = $materia;
 

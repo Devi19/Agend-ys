@@ -62,12 +62,12 @@ class Calificaciones
      */
     private $alumno;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNota(): ?float
+    public function getNota(): float
     {
         return $this->nota;
     }
@@ -79,7 +79,7 @@ class Calificaciones
         return $this;
     }
 
-    public function getCiclo(): ?string
+    public function getCiclo(): string
     {
         return $this->ciclo;
     }
@@ -91,41 +91,44 @@ class Calificaciones
         return $this;
     }
 
-    public function getPorcentaje(): ?int
+    public function getPorcentaje(): int
     {
         return $this->porcentaje;
     }
 
-    public function setPorcentaje(?int $porcentaje): self
+    public function setPorcentaje(int $porcentaje): self
     {
         $this->porcentaje = $porcentaje;
 
         return $this;
     }
 
-    public function getMateria(): ?Materias
+    public function getMateria(): Materias
     {
         return $this->materia;
     }
 
-    public function setMateria(?Materias $materia): self
+    public function setMateria(Materias $materia): self
     {
         $this->materia = $materia;
 
         return $this;
     }
 
-    public function getAlumno(): ?Alumnos
+    public function getAlumno(): Alumnos
     {
         return $this->alumno;
     }
 
-    public function setAlumno(?Alumnos $alumno): self
+    public function setAlumno(Alumnos $alumno): self
     {
         $this->alumno = $alumno;
 
         return $this;
     }
+	public function __toString(){
+		return $this->nota;
+	}
 
 
 }

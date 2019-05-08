@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Wiki{% endblock %}
+
+{% block body %}
+    <h1>Create new Wiki</h1>
+
+    {{ include('wiki/_form.html.twig') }}
+
+    <a href="{{ path('wiki_index') }}">back to list</a>
+{% endblock %}

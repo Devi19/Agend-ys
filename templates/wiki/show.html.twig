@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wiki{% endblock %}
+
+{% block body %}
+    <h1>Wiki</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ wiki.id }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ wiki.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Cuerpo</th>
+                <td>{{ wiki.cuerpo }}</td>
+            </tr>
+            <tr>
+                <th>Hashtag</th>
+                <td>{{ wiki.hashtag }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('wiki_index') }}">back to list</a>
+
+    <a href="{{ path('wiki_edit', {'id': wiki.id}) }}">edit</a>
+
+    {{ include('wiki/_delete_form.html.twig') }}
+{% endblock %}

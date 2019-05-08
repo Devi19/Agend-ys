@@ -24,11 +24,6 @@ class Categorias
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $descripcion;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Recordatorios", mappedBy="categoria")
      */
     private $recordatorios;
@@ -51,18 +46,6 @@ class Categorias
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getDescripcion(): ?string
-    {
-        return $this->descripcion;
-    }
-
-    public function setDescripcion(?string $descripcion): self
-    {
-        $this->descripcion = $descripcion;
 
         return $this;
     }

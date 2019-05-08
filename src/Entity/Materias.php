@@ -24,11 +24,6 @@ class Materias
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $descripcion;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\alumnos", inversedBy="materias")
      */
     private $id_alumno;
@@ -75,18 +70,6 @@ class Materias
     public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getDescripcion(): ?string
-    {
-        return $this->descripcion;
-    }
-
-    public function setDescripcion(?string $descripcion): self
-    {
-        $this->descripcion = $descripcion;
 
         return $this;
     }

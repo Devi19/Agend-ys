@@ -12,86 +12,90 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/horarios")
  */
-class HorariosController extends AbstractController
-{
-    /**
-     * @Route("/", name="horarios_index", methods={"GET"})
-     */
-    public function index(): Response
-    {
-        $horarios = $this->getDoctrine()
-            ->getRepository(Horarios::class)
-            ->findAll();
+class HorariosController extends AbstractController {
 
-       /*  dump($horarios);
-        die();  */
-        
-        return $this->render('horarios/index.html.twig', [
-            'horarios' => $horarios,
-        ]);
-    }
+	/**
+	 * @Route("/", name="horarios_index", methods={"GET"})
+	 */
+	public function index(): Response {
+		$id_alumno = $this->getUser()->getId();
 
-    
-    /**
-     * @Route("/new", name="horarios_new", methods={"GET","POST"})
-     */
-    public function nuevo(Request $request): Response
-    {
-        $horario = new Horarios();
-        $form = $this->createForm(HorariosType::class, $horario);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {            
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($horario);
-            $entityManager->flush();
+		$em = $this->getDoctrine()->getManager();
+		$conn = $em->getConnection();
+		$sql = ' SELECT hora_inicio, hora_final, dia, actividad, id
+					FROM horarios  
+					WHERE horarios.id_alumno_id= :id_alumno				
+					';
+		$stmt = $conn->prepare($sql);
+		$stmt->execute(['id_alumno' => $id_alumno]);
+		$horarios = $stmt->fetchAll();
 
-            return $this->redirectToRoute('horarios_new');
-        }
+		return $this->render('horarios/index.html.twig', [
+					'horarios' => $horarios,
+		]);
+	}
 
-        return $this->render('horarios/new.html.twig', [
-            'horario' => $horario,
-            'form' => $form->createView(),
-        ]);
-    }
+	/**
+	 * @Route("/new", name="horarios_new", methods={"GET","POST"})
+	 */
+	public function nuevo(Request $request): Response {
+		$horario = new Horarios();
+		$alumno = $this->getUser();
+		
+		$form = $this->createForm(HorariosType::class, $horario);
+		$form->handleRequest($request);
 
-    /**
-     * @Route("/{id}/edit", name="horarios_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Horarios $horario): Response
-    {
-        $form = $this->createForm(HorariosType::class, $horario);
-        $form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$horario->setIdAlumno($alumno);
+			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->persist($horario);
+			$entityManager->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+			return $this->redirectToRoute('horarios_new');
+		}
 
-            return $this->redirectToRoute('horarios_index', [
-                'id' => $horario->getId(),
-            ]);
-        }
+		return $this->render('horarios/new.html.twig', [
+					'horario' => $horario,
+					'form' => $form->createView(),
+		]);
+	}
 
-        return $this->render('horarios/edit.html.twig', [
-            'horario' => $horario,
-            'form' => $form->createView(),
-        ]);
-    }
+	/**
+	 * @Route("/{id}/edit", name="horarios_edit", methods={"GET","POST"})
+	 */
+	public function edit(Request $request, Horarios $horario): Response {
+		$form = $this->createForm(HorariosType::class, $horario);
+		$form->handleRequest($request);
 
-    /**
-     * @Route("/{id}/delete", name="horarios_delete", methods={"GET", "POST", "delete"})
-     */
-    public function delete(Request $request, Horarios $horario): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($horario);
-        $entityManager->flush();
-        
-        /* if ($this->isCsrfTokenValid('delete'.$horario->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($horario);
-            $entityManager->flush();
-        } */
+		if ($form->isSubmitted() && $form->isValid()) {
+			$this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('horarios_index');
-    }
+			return $this->redirectToRoute('horarios_index', [
+						'id' => $horario->getId(),
+			]);
+		}
+
+		return $this->render('horarios/edit.html.twig', [
+					'horario' => $horario,
+					'form' => $form->createView(),
+		]);
+	}
+
+	/**
+	 * @Route("/{id}/delete", name="horarios_delete", methods={"GET", "POST", "delete"})
+	 */
+	public function delete(Request $request, Horarios $horario): Response {
+		$entityManager = $this->getDoctrine()->getManager();
+		$entityManager->remove($horario);
+		$entityManager->flush();
+
+		/* if ($this->isCsrfTokenValid('delete'.$horario->getId(), $request->request->get('_token'))) {
+		  $entityManager = $this->getDoctrine()->getManager();
+		  $entityManager->remove($horario);
+		  $entityManager->flush();
+		  } */
+
+		return $this->redirectToRoute('horarios_index');
+	}
+
 }

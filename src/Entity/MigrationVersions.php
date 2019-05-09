@@ -28,12 +28,12 @@ class MigrationVersions
      */
     private $executedAt;
 
-    public function getVersion(): ?string
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    public function getExecutedAt(): ?\DateTimeImmutable
+    public function getExecutedAt(): \DateTimeImmutable
     {
         return $this->executedAt;
     }

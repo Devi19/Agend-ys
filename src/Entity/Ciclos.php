@@ -38,12 +38,12 @@ class Ciclos
         $this->calificaciones = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNombre(): ?int
+    public function getNombre(): int
     {
         return $this->nombre;
     }
@@ -55,12 +55,12 @@ class Ciclos
         return $this;
     }
 
-    public function getPorcentaje(): ?float
+    public function getPorcentaje(): float
     {
         return $this->porcentaje;
     }
 
-    public function setPorcentaje(?float $porcentaje): self
+    public function setPorcentaje(float $porcentaje): self
     {
         $this->porcentaje = $porcentaje;
 

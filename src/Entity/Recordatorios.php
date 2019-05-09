@@ -72,12 +72,12 @@ class Recordatorios
      */
     private $alumno;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitulo(): ?string
+    public function getTitulo(): string
     {
         return $this->titulo;
     }
@@ -89,19 +89,19 @@ class Recordatorios
         return $this;
     }
 
-    public function getDescripcion(): ?string
+    public function getDescripcion(): string
     {
         return $this->descripcion;
     }
 
-    public function setDescripcion(?string $descripcion): self
+    public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
 
         return $this;
     }
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getFecha(): \DateTimeInterface
     {
         return $this->fecha;
     }
@@ -113,36 +113,36 @@ class Recordatorios
         return $this;
     }
 
-    public function getCategoria(): ?Categorias
+    public function getCategoria(): Categorias
     {
         return $this->categoria;
     }
 
-    public function setCategoria(?Categorias $categoria): self
+    public function setCategoria(Categorias $categoria): self
     {
         $this->categoria = $categoria;
 
         return $this;
     }
 
-    public function getMateria(): ?Materias
+    public function getMateria(): Materias
     {
         return $this->materia;
     }
 
-    public function setMateria(?Materias $materia): self
+    public function setMateria(Materias $materia): self
     {
         $this->materia = $materia;
 
         return $this;
     }
 
-    public function getAlumno(): ?Alumnos
+    public function getAlumno(): Alumnos
     {
         return $this->alumno;
     }
 
-    public function setAlumno(?Alumnos $alumno): self
+    public function setAlumno(Alumnos $alumno): self
     {
         $this->alumno = $alumno;
 

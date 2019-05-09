@@ -98,12 +98,12 @@ class Calificaciones
          		return $this->nota;
          	}
 
-    public function getCiclos(): ?Ciclos
+    public function getCiclos(): Ciclos
     {
         return $this->ciclos;
     }
 
-    public function setCiclos(?Ciclos $ciclos): self
+    public function setCiclos(Ciclos $ciclos): self
     {
         $this->ciclos = $ciclos;
 

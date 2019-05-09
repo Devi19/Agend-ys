@@ -25,8 +25,8 @@
                                 <tbody id='tbody'>
                                     {% for horario in horarios %}
                                        <tr>                                            
-                                            <td id='hora_inicio'>{{ horario.horaInicio ? horario.horaInicio|date('H:i:s') : '' }}</td>
-                                            <td id='hora_final'>{{ horario.horaFinal ? horario.horaFinal|date('H:i:s') : '' }}</td>
+                                            <td>{{ horario.hora_inicio ? horario.hora_inicio|date('H:i:s') : '' }}</td>
+                                            <td>{{ horario.hora_final ? horario.hora_final|date('H:i:s') : '' }}</td>
                                             {% if horario.dia == 1 %}  
                                                 <td>{{horario.actividad}}</td> 
                                                 <td></td>

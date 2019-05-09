@@ -62,12 +62,12 @@ class Recursos
      */
     private $alumno;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTiposArchivo(): ?string
+    public function getTiposArchivo(): string
     {
         return $this->tiposArchivo;
     }
@@ -79,7 +79,7 @@ class Recursos
         return $this;
     }
 
-    public function getTamano(): ?float
+    public function getTamano(): float
     {
         return $this->tamano;
     }
@@ -91,7 +91,7 @@ class Recursos
         return $this;
     }
 
-    public function getNombre(): ?string
+    public function getNombre(): string
     {
         return $this->nombre;
     }
@@ -103,24 +103,24 @@ class Recursos
         return $this;
     }
 
-    public function getMateria(): ?Materias
+    public function getMateria(): Materias
     {
         return $this->materia;
     }
 
-    public function setMateria(?Materias $materia): self
+    public function setMateria(Materias $materia): self
     {
         $this->materia = $materia;
 
         return $this;
     }
 
-    public function getAlumno(): ?Alumnos
+    public function getAlumno(): Alumnos
     {
         return $this->alumno;
     }
 
-    public function setAlumno(?Alumnos $alumno): self
+    public function setAlumno(Alumnos $alumno): self
     {
         $this->alumno = $alumno;
 

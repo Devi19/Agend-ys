@@ -3,12 +3,14 @@
 {% block title %}Calificaciones index{% endblock %}
 
 {% block body %}
+	
     <h1>Calificaciones index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
+				<th>Materia</th>
                 <th>Nota</th>
                 <th>Ciclo</th>
                 <th>Porcentaje</th>
@@ -16,9 +18,11 @@
             </tr>
         </thead>
         <tbody>
+			
         {% for calificacione in calificaciones %}
             <tr>
                 <td>{{ calificacione.id }}</td>
+				<td>{{calificacione.nombre}}</td>
                 <td>{{ calificacione.nota }}</td>
                 <td>{{ calificacione.ciclo }}</td>
                 <td>{{ calificacione.porcentaje }}</td>

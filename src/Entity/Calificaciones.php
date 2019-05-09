@@ -29,20 +29,6 @@ class Calificaciones
     private $nota;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="ciclo", type="string", length=255, nullable=false)
-     */
-    private $ciclo;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="porcentaje", type="integer", nullable=true)
-     */
-    private $porcentaje;
-
-    /**
      * @var \Materias
      *
      * @ORM\ManyToOne(targetEntity="Materias")
@@ -62,6 +48,12 @@ class Calificaciones
      */
     private $alumno;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ciclos", inversedBy="calificaciones")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ciclos;
+
     public function getId(): int
     {
         return $this->id;
@@ -75,30 +67,6 @@ class Calificaciones
     public function setNota(float $nota): self
     {
         $this->nota = $nota;
-
-        return $this;
-    }
-
-    public function getCiclo(): string
-    {
-        return $this->ciclo;
-    }
-
-    public function setCiclo(string $ciclo): self
-    {
-        $this->ciclo = $ciclo;
-
-        return $this;
-    }
-
-    public function getPorcentaje(): int
-    {
-        return $this->porcentaje;
-    }
-
-    public function setPorcentaje(int $porcentaje): self
-    {
-        $this->porcentaje = $porcentaje;
 
         return $this;
     }
@@ -127,8 +95,20 @@ class Calificaciones
         return $this;
     }
 	public function __toString(){
-		return $this->nota;
-	}
+         		return $this->nota;
+         	}
+
+    public function getCiclos(): ?Ciclos
+    {
+        return $this->ciclos;
+    }
+
+    public function setCiclos(?Ciclos $ciclos): self
+    {
+        $this->ciclos = $ciclos;
+
+        return $this;
+    }
 
 
 }

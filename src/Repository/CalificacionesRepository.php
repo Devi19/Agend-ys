@@ -18,7 +18,7 @@ class CalificacionesRepository extends ServiceEntityRepository {
 		parent::__construct($registry, Calificaciones::class);
 	}
 
-	public function findAllCampo($campo): array {
+	/* public function findAllCampo($campo): array {
 		$conn = $this->getEntityManager()->getConnection();
 
 		$sql = '
@@ -31,7 +31,7 @@ class CalificacionesRepository extends ServiceEntityRepository {
 
 		// returns an array of arrays (i.e. a raw data set)
 		return $stmt->fetchAll();
-	}
+	} */
 
 	// /**
 	//  * @return Calificaciones[] Returns an array of Calificaciones objects

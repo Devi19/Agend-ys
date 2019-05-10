@@ -8,27 +8,15 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ calificacione.id }}</td>
-            </tr>
-            <tr>
                 <th>Nota</th>
                 <td>{{ calificacione.nota }}</td>
-            </tr>
-            <tr>
-                <th>Ciclo</th>
-                <td>{{ calificacione.ciclo }}</td>
-            </tr>
-            <tr>
-                <th>Porcentaje</th>
-                <td>{{ calificacione.porcentaje }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('calificaciones_index') }}">back to list</a>
 
-    <a href="{{ path('calificaciones_edit', {'id': calificacione.id}) }}">edit</a>
+    <a href="{{ path('calificaciones_edit', {'idAlumno': calificacione.idAlumno}) }}">edit</a>
 
     {{ include('calificaciones/_delete_form.html.twig') }}
 {% endblock %}

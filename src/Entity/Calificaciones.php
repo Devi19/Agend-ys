@@ -7,20 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Calificaciones
  *
- * @ORM\Table(name="calificaciones", indexes={@ORM\Index(name="IDX_41F72CC8B54DBBCB", columns={"materia_id"}), @ORM\Index(name="IDX_41F72CC8FC28E5EE", columns={"alumno_id"})})
+ * @ORM\Table(name="calificaciones", indexes={@ORM\Index(name="id_materia", columns={"id_materia"}), @ORM\Index(name="id_ciclo", columns={"id_ciclo"}), @ORM\Index(name="IDX_41F72CC8320260C0", columns={"id_alumno"})})
  * @ORM\Entity
  */
 class Calificaciones
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
     /**
      * @var float
      *
@@ -29,37 +20,42 @@ class Calificaciones
     private $nota;
 
     /**
-     * @var \Materias
-     *
-     * @ORM\ManyToOne(targetEntity="Materias")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="materia_id", referencedColumnName="id")
-     * })
-     */
-    private $materia;
-
-    /**
      * @var \Alumnos
      *
-     * @ORM\ManyToOne(targetEntity="Alumnos")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Alumnos")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id")
      * })
      */
-    private $alumno;
+    private $idAlumno;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ciclos", inversedBy="calificaciones")
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Materias
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Materias")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_materia", referencedColumnName="id")
+     * })
      */
-    private $ciclos;
+    private $idMateria;
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    /**
+     * @var \Ciclos
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Ciclos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_ciclo", referencedColumnName="id")
+     * })
+     */
+    private $idCiclo;
 
-    public function getNota(): float
+    public function getNota(): ?float
     {
         return $this->nota;
     }
@@ -71,41 +67,38 @@ class Calificaciones
         return $this;
     }
 
-    public function getMateria(): Materias
+    public function getIdAlumno(): ?Alumnos
     {
-        return $this->materia;
+        return $this->idAlumno;
     }
 
-    public function setMateria(Materias $materia): self
+    public function setIdAlumno(?Alumnos $idAlumno): self
     {
-        $this->materia = $materia;
+        $this->idAlumno = $idAlumno;
 
         return $this;
     }
 
-    public function getAlumno(): Alumnos
+    public function getIdMateria(): ?Materias
     {
-        return $this->alumno;
+        return $this->idMateria;
     }
 
-    public function setAlumno(Alumnos $alumno): self
+    public function setIdMateria(?Materias $idMateria): self
     {
-        $this->alumno = $alumno;
+        $this->idMateria = $idMateria;
 
         return $this;
     }
-	public function __toString(){
-         		return $this->nota;
-         	}
 
-    public function getCiclos(): Ciclos
+    public function getIdCiclo(): ?Ciclos
     {
-        return $this->ciclos;
+        return $this->idCiclo;
     }
 
-    public function setCiclos(Ciclos $ciclos): self
+    public function setIdCiclo(?Ciclos $idCiclo): self
     {
-        $this->ciclos = $ciclos;
+        $this->idCiclo = $idCiclo;
 
         return $this;
     }

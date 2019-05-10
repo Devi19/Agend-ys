@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Recursos
  *
- * @ORM\Table(name="recursos", indexes={@ORM\Index(name="IDX_5163D17DB54DBBCB", columns={"materia_id"}), @ORM\Index(name="IDX_5163D17DFC28E5EE", columns={"alumno_id"})})
+ * @ORM\Table(name="recursos", indexes={@ORM\Index(name="IDX_5163D17DFC28E5EE", columns={"alumno_id"}), @ORM\Index(name="IDX_5163D17DB54DBBCB", columns={"materia_id"})})
  * @ORM\Entity
  */
 class Recursos
@@ -17,7 +17,7 @@ class Recursos
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $id;
 
@@ -45,7 +45,9 @@ class Recursos
     /**
      * @var \Materias
      *
-     * @ORM\ManyToOne(targetEntity="Materias")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Materias")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="materia_id", referencedColumnName="id")
      * })
@@ -55,19 +57,21 @@ class Recursos
     /**
      * @var \Alumnos
      *
-     * @ORM\ManyToOne(targetEntity="Alumnos")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Alumnos")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
      * })
      */
     private $alumno;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTiposArchivo(): string
+    public function getTiposArchivo(): ?string
     {
         return $this->tiposArchivo;
     }
@@ -79,7 +83,7 @@ class Recursos
         return $this;
     }
 
-    public function getTamano(): float
+    public function getTamano(): ?float
     {
         return $this->tamano;
     }
@@ -91,7 +95,7 @@ class Recursos
         return $this;
     }
 
-    public function getNombre(): string
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
@@ -103,24 +107,24 @@ class Recursos
         return $this;
     }
 
-    public function getMateria(): Materias
+    public function getMateria(): ?Materias
     {
         return $this->materia;
     }
 
-    public function setMateria(Materias $materia): self
+    public function setMateria(?Materias $materia): self
     {
         $this->materia = $materia;
 
         return $this;
     }
 
-    public function getAlumno(): Alumnos
+    public function getAlumno(): ?Alumnos
     {
         return $this->alumno;
     }
 
-    public function setAlumno(Alumnos $alumno): self
+    public function setAlumno(?Alumnos $alumno): self
     {
         $this->alumno = $alumno;
 

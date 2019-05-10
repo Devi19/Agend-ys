@@ -2,99 +2,48 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CiclosRepository")
+ * Ciclos
+ *
+ * @ORM\Table(name="ciclos")
+ * @ORM\Entity
  */
 class Ciclos
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=50, nullable=false)
      */
-    private $nombre;
+    private $tipo;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $porcentaje;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Calificaciones", mappedBy="ciclos")
-     */
-    private $calificaciones;
-
-    public function __construct()
-    {
-        $this->calificaciones = new ArrayCollection();
-    }
-
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNombre(): int
+    public function getTipo(): ?string
     {
-        return $this->nombre;
+        return $this->tipo;
     }
 
-    public function setNombre(int $nombre): self
+    public function setTipo(string $tipo): self
     {
-        $this->nombre = $nombre;
+        $this->tipo = $tipo;
 
         return $this;
     }
 
-    public function getPorcentaje(): float
-    {
-        return $this->porcentaje;
-    }
 
-    public function setPorcentaje(float $porcentaje): self
-    {
-        $this->porcentaje = $porcentaje;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Calificaciones[]
-     */
-    public function getCalificaciones(): Collection
-    {
-        return $this->calificaciones;
-    }
-
-    public function addCalificacione(Calificaciones $calificacione): self
-    {
-        if (!$this->calificaciones->contains($calificacione)) {
-            $this->calificaciones[] = $calificacione;
-            $calificacione->setCiclos($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCalificacione(Calificaciones $calificacione): self
-    {
-        if ($this->calificaciones->contains($calificacione)) {
-            $this->calificaciones->removeElement($calificacione);
-            // set the owning side to null (unless already changed)
-            if ($calificacione->getCiclos() === $this) {
-                $calificacione->setCiclos(null);
-            }
-        }
-
-        return $this;
-    }
 }

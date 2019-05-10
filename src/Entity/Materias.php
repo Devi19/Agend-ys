@@ -30,7 +30,6 @@ class Materias
      */
     private $nombre;
 
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -54,12 +53,12 @@ class Materias
         $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNombre()
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
@@ -71,7 +70,6 @@ class Materias
         return $this;
     }
 
-    
     /**
      * @return Collection|Alumnos[]
      */

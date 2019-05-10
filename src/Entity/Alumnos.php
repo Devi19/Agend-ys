@@ -46,18 +46,18 @@ class Alumnos implements UserInterface
     private $email;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="text", length=65535, nullable=false)
-     */
-    private $password;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="foto", type="string", length=55, nullable=true)
      */
     private $foto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="text", length=65535, nullable=false)
+     */
+    private $password;
 
     /**
      * @var string
@@ -88,15 +88,10 @@ class Alumnos implements UserInterface
      */
     private $materias;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Wiki", mappedBy="alumnos")
-     */
-    private $wiki;
-	
-	//Autorizacion
-	public function getUsername(){
+    //LOGIN
+    //Necesario implementacion de estos métodos para la autenticación de alumnos
+
+    public function getUsername(){
 		return $this->email;
 	}
 	public function getSalt(){
@@ -108,8 +103,8 @@ class Alumnos implements UserInterface
 	public function eraseCredentials(){
 		
 	}	
-	//Fin Autorizacion
-	
+	//Fin LOGIN
+
 
     /**
      * Constructor
@@ -118,27 +113,26 @@ class Alumnos implements UserInterface
     {
         $this->alumnosTarget = new \Doctrine\Common\Collections\ArrayCollection();
         $this->materias = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->wiki = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNombre()
+    public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre)
+    public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
 
         return $this;
     }
 
-    public function getApellidos()
+    public function getApellidos(): ?string
     {
         return $this->apellidos;
     }
@@ -150,7 +144,7 @@ class Alumnos implements UserInterface
         return $this;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -162,7 +156,19 @@ class Alumnos implements UserInterface
         return $this;
     }
 
-    public function getPassword()
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(?string $foto): self
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -174,19 +180,7 @@ class Alumnos implements UserInterface
         return $this;
     }
 
-    public function getFoto()
-    {
-        return $this->foto;
-    }
-
-    public function setFoto(string $foto): self
-    {
-        $this->foto = $foto;
-
-        return $this;
-    }
-
-    public function getRole()
+    public function getRole(): ?string
     {
         return $this->role;
     }
@@ -252,36 +246,8 @@ class Alumnos implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Wiki[]
-     */
-    public function getWiki(): Collection
-    {
-        return $this->wiki;
+    public function __toString(){
+        return $this->nombre;
     }
-
-    public function addWiki(Wiki $wiki): self
-    {
-        if (!$this->wiki->contains($wiki)) {
-            $this->wiki[] = $wiki;
-            $wiki->addAlumno($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWiki(Wiki $wiki): self
-    {
-        if ($this->wiki->contains($wiki)) {
-            $this->wiki->removeElement($wiki);
-            $wiki->removeAlumno($this);
-        }
-
-        return $this;
-    }
-	
-	public function __toString(){
-		return $this->nombre;
-	}
 
 }

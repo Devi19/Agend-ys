@@ -12,119 +12,112 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Horarios
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $id;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="hora_inicio", type="time", nullable=false)
-     */
-    private $horaInicio;
+private $id;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="hora_final", type="time", nullable=false)
-     */
-    private $horaFinal;
+/**
+ * @var \DateTime
+ *
+ * @ORM\Column(name="hora_inicio", type="time", nullable=false)
+ */
+private $horaInicio;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="dia", type="integer", nullable=false)
-     */
-    private $dia;
+/**
+ * @var \DateTime
+ *
+ * @ORM\Column(name="hora_final", type="time", nullable=false)
+ */
+private $horaFinal;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="actividad", type="string", length=255, nullable=false)
-     */
-    private $actividad;
+/**
+ * @var int
+ *
+ * @ORM\Column(name="dia", type="integer", nullable=false)
+ */
+private $dia;
 
-    /**
-     * @var \Alumnos
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Alumnos")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id")
-     * })
-     */
-    private $idAlumno;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="actividad", type="string", length=255, nullable=false)
+ */
+private $actividad;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+/**
+ * @var \Alumnos
+ *
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="NONE")
+ * @ORM\OneToOne(targetEntity="Alumnos")
+ * @ORM\JoinColumns({
+ *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id")
+ * })
+ */
+private $idAlumno;
 
-    public function getHoraInicio(): ?\DateTimeInterface
-    {
-        return $this->horaInicio;
-    }
+public function getId(): ?int
+{
+return $this->id;
+}
 
-    public function setHoraInicio(\DateTimeInterface $horaInicio): self
-    {
-        $this->horaInicio = $horaInicio;
+public function getHoraInicio(): ?\DateTimeInterface
+{
+return $this->horaInicio;
+}
 
-        return $this;
-    }
+public function setHoraInicio(\DateTimeInterface $horaInicio): self
+{
+$this->horaInicio = $horaInicio;
 
-    public function getHoraFinal(): ?\DateTimeInterface
-    {
-        return $this->horaFinal;
-    }
+return $this;
+}
 
-    public function setHoraFinal(\DateTimeInterface $horaFinal): self
-    {
-        $this->horaFinal = $horaFinal;
+public function getHoraFinal(): ?\DateTimeInterface
+{
+return $this->horaFinal;
+}
 
-        return $this;
-    }
+public function setHoraFinal(\DateTimeInterface $horaFinal): self
+{
+$this->horaFinal = $horaFinal;
 
-    public function getDia(): ?int
-    {
-        return $this->dia;
-    }
+return $this;
+}
 
-    public function setDia(int $dia): self
-    {
-        $this->dia = $dia;
+public function getDia(): ?int
+{
+return $this->dia;
+}
 
-        return $this;
-    }
+public function setDia(int $dia): self
+{
+$this->dia = $dia;
 
-    public function getActividad(): ?string
-    {
-        return $this->actividad;
-    }
+return $this;
+}
 
-    public function setActividad(string $actividad): self
-    {
-        $this->actividad = $actividad;
+public function getActividad(): ?string
+{
+return $this->actividad;
+}
 
-        return $this;
-    }
+public function setActividad(string $actividad): self
+{
+$this->actividad = $actividad;
 
-    public function getIdAlumno(): ?Alumnos
-    {
-        return $this->idAlumno;
-    }
+return $this;
+}
 
-    public function setIdAlumno(?Alumnos $idAlumno): self
-    {
-        $this->idAlumno = $idAlumno;
+public function getIdAlumno(): ?Alumnos
+{
+return $this->idAlumno;
+}
 
-        return $this;
-    }
+public function setIdAlumno(?Alumnos $idAlumno): self
+{
+$this->idAlumno = $idAlumno;
 
+return $this;
+}
 
 }

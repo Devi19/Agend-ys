@@ -50,7 +50,7 @@ class CalificacionesController extends AbstractController
     /**
      * @Route("/new", name="calificaciones_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function nuevo(Request $request): Response
     {
         $calificacione = new Calificaciones();
         $alumno= $this->getUser()->getId();
@@ -65,7 +65,7 @@ class CalificacionesController extends AbstractController
                 'query_builder' => function (EntityRepository $er){
                     return $er->createQueryBuilder('m')
                         ->andWhere('m.id = :id_alumno')
-                        ->setParameter('id_alumno', 2)
+                        ->setParameter('id_alumno', 1)
                         ->getQuery()
                         ->getOneOrNullResult();
                 },

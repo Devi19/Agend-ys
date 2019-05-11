@@ -7,14 +7,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 class HorariosType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('horaInicio')
-            ->add('horaFinal')
+			->add('horaInicio', TimeType::class)
+            ->add('horaFinal',  TimeType::class)
             ->add('dia', ChoiceType::class, [
                 'choices' => [
                     'lunes' => 1,

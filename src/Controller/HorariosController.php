@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Horarios;
+use App\Entity\Alumnos;
 use App\Form\HorariosType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class HorariosController extends AbstractController {
 		$conn = $em->getConnection();
 		$sql = ' SELECT hora_inicio, hora_final, dia, actividad, id
 					FROM horarios  
-					WHERE horarios.id_alumno_id= :id_alumno				
+					WHERE horarios.id_alumno= :id_alumno				
 					';
 		$stmt = $conn->prepare($sql);
 		$stmt->execute(['id_alumno' => $id_alumno]);
@@ -40,13 +41,20 @@ class HorariosController extends AbstractController {
 	 */
 	public function nuevo(Request $request): Response {
 		$horario = new Horarios();
-		$alumno = $this->getUser();
+		//$alumno= new Alumnos();
+		
+		$alumno= $this->getUser();
+//		dump($alumno_id);
+//		die();
 		
 		$form = $this->createForm(HorariosType::class, $horario);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$horario->setIdAlumno($alumno);
+			$horario->setIdAlumno($alumno);			
+//			dump($horario);
+//			die();
+			
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($horario);
 			$entityManager->flush();

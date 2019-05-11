@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Horarios
  *
- * @ORM\Table(name="horarios", indexes={@ORM\Index(name="IDX_5433650A7C1D59C9", columns={"id_alumno_id"})})
+ * @ORM\Table(name="horarios", indexes={@ORM\Index(name="IDX_5433650A7C1D59C9", columns={"id_alumno"})})
  * @ORM\Entity
  */
 class Horarios
@@ -17,7 +17,7 @@ class Horarios
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $id;
 
@@ -52,9 +52,11 @@ class Horarios
     /**
      * @var \Alumnos
      *
-     * @ORM\ManyToOne(targetEntity="Alumnos")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Alumnos")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_alumno_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id")
      * })
      */
     private $idAlumno;

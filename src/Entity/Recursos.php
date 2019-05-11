@@ -38,9 +38,16 @@ class Recursos
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     * @ORM\Column(name="descripcion", type="string", length=255, nullable=false)
      */
-    private $nombre;
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     */
+    private $url;
 
     /**
      * @var \Materias
@@ -95,14 +102,26 @@ class Recursos
         return $this;
     }
 
-    public function getNombre(): ?string
+    public function getDescripcion(): ?string
     {
-        return $this->nombre;
+        return $this->descripcion;
     }
 
-    public function setNombre(string $nombre): self
+    public function setDescripcion(string $descripcion): self
     {
-        $this->nombre = $nombre;
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

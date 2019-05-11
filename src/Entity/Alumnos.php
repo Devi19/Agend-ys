@@ -15,239 +15,243 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Alumnos implements UserInterface
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+/**
+ * @var int
+ *
+ * @ORM\Column(name="id", type="integer", nullable=false)
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="IDENTITY")
+ */
+private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
-     */
-    private $nombre;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+ */
+private $nombre;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="apellidos", type="string", length=255, nullable=false)
-     */
-    private $apellidos;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="apellidos", type="string", length=255, nullable=false)
+ */
+private $apellidos;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     */
-    private $email;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="email", type="string", length=255, nullable=false)
+ */
+private $email;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="foto", type="string", length=55, nullable=true)
-     */
-    private $foto;
+/**
+ * @var string|null
+ *
+ * @ORM\Column(name="foto", type="string", length=55, nullable=true)
+ */
+private $foto;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="text", length=65535, nullable=false)
-     */
-    private $password;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="password", type="text", length=65535, nullable=false)
+ */
+private $password;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=50, nullable=false)
-     */
-    private $role;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="role", type="string", length=50, nullable=false)
+ */
+private $role;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Alumnos", inversedBy="alumnosSource")
-     * @ORM\JoinTable(name="alumnos_alumnos",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="alumnos_source", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="alumnos_target", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $alumnosTarget;
+/**
+ * @var \Doctrine\Common\Collections\Collection
+ *
+ * @ORM\ManyToMany(targetEntity="Alumnos", inversedBy="alumnosSource")
+ * @ORM\JoinTable(name="alumnos_alumnos",
+ *   joinColumns={
+ *     @ORM\JoinColumn(name="alumnos_source", referencedColumnName="id")
+ *   },
+ *   inverseJoinColumns={
+ *     @ORM\JoinColumn(name="alumnos_target", referencedColumnName="id")
+ *   }
+ * )
+ */
+private $alumnosTarget;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Materias", mappedBy="alumnos")
-     */
-    private $materias;
-
-    //LOGIN
-    //Necesario implementacion de estos métodos para la autenticación de alumnos
-
-    public function getUsername(){
-		return $this->email;
-	}
-	public function getSalt(){
-		return null;
-	}
-	public function getRoles(){
-		return array($this->getRole());
-	}
-	public function eraseCredentials(){
-		
-	}	
-	//Fin LOGIN
+/**
+ * @var \Doctrine\Common\Collections\Collection
+ *
+ * @ORM\ManyToMany(targetEntity="Materias", mappedBy="alumnos")
+ */
+private $materias;
 
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->alumnosTarget = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->materias = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+//LOGIN
+//Necesario implementacion de estos métodos para la autenticación de alumnos
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+public function getUsername(){
+return $this->email;
+}
 
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
+public function getSalt(){
+return null;
+}
 
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
+public function getRoles(){
+return array($this->getRole());
+}
 
-        return $this;
-    }
+public function eraseCredentials(){
 
-    public function getApellidos(): ?string
-    {
-        return $this->apellidos;
-    }
+}
+//Fin LOGIN
 
-    public function setApellidos(string $apellidos): self
-    {
-        $this->apellidos = $apellidos;
 
-        return $this;
-    }
+/**
+ * Constructor
+ */
+public function __construct()
+{
+$this->alumnosTarget = new \Doctrine\Common\Collections\ArrayCollection();
+$this->materias = new \Doctrine\Common\Collections\ArrayCollection();
+}
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
+public function getId(): ?int
+{
+return $this->id;
+}
 
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
+public function getNombre(): ?string
+{
+return $this->nombre;
+}
 
-        return $this;
-    }
+public function setNombre(string $nombre): self
+{
+$this->nombre = $nombre;
 
-    public function getFoto(): ?string
-    {
-        return $this->foto;
-    }
+return $this;
+}
 
-    public function setFoto(?string $foto): self
-    {
-        $this->foto = $foto;
+public function getApellidos(): ?string
+{
+return $this->apellidos;
+}
 
-        return $this;
-    }
+public function setApellidos(string $apellidos): self
+{
+$this->apellidos = $apellidos;
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
+return $this;
+}
 
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
+public function getEmail(): ?string
+{
+return $this->email;
+}
 
-        return $this;
-    }
+public function setEmail(string $email): self
+{
+$this->email = $email;
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
+return $this;
+}
 
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
+public function getFoto(): ?string
+{
+return $this->foto;
+}
 
-        return $this;
-    }
+public function setFoto(?string $foto): self
+{
+$this->foto = $foto;
 
-    /**
-     * @return Collection|Alumnos[]
-     */
-    public function getAlumnosTarget(): Collection
-    {
-        return $this->alumnosTarget;
-    }
+return $this;
+}
 
-    public function addAlumnosTarget(Alumnos $alumnosTarget): self
-    {
-        if (!$this->alumnosTarget->contains($alumnosTarget)) {
-            $this->alumnosTarget[] = $alumnosTarget;
-        }
+public function getPassword(): ?string
+{
+return $this->password;
+}
 
-        return $this;
-    }
+public function setPassword(string $password): self
+{
+$this->password = $password;
 
-    public function removeAlumnosTarget(Alumnos $alumnosTarget): self
-    {
-        if ($this->alumnosTarget->contains($alumnosTarget)) {
-            $this->alumnosTarget->removeElement($alumnosTarget);
-        }
+return $this;
+}
 
-        return $this;
-    }
+public function getRole(): ?string
+{
+return $this->role;
+}
 
-    /**
-     * @return Collection|Materias[]
-     */
-    public function getMaterias(): Collection
-    {
-        return $this->materias;
-    }
+public function setRole(string $role): self
+{
+$this->role = $role;
 
-    public function addMateria(Materias $materia): self
-    {
-        if (!$this->materias->contains($materia)) {
-            $this->materias[] = $materia;
-            $materia->addAlumno($this);
-        }
+return $this;
+}
 
-        return $this;
-    }
+/**
+ * @return Collection|Alumnos[]
+ */
+public function getAlumnosTarget(): Collection
+{
+return $this->alumnosTarget;
+}
 
-    public function removeMateria(Materias $materia): self
-    {
-        if ($this->materias->contains($materia)) {
-            $this->materias->removeElement($materia);
-            $materia->removeAlumno($this);
-        }
+public function addAlumnosTarget(Alumnos $alumnosTarget): self
+{
+if (!$this->alumnosTarget->contains($alumnosTarget)) {
+$this->alumnosTarget[] = $alumnosTarget;
+}
 
-        return $this;
-    }
+return $this;
+}
 
-    public function __toString(){
-        return $this->nombre;
-    }
+public function removeAlumnosTarget(Alumnos $alumnosTarget): self
+{
+if ($this->alumnosTarget->contains($alumnosTarget)) {
+$this->alumnosTarget->removeElement($alumnosTarget);
+}
+
+return $this;
+}
+
+/**
+ * @return Collection|Materias[]
+ */
+public function getMaterias(): Collection
+{
+return $this->materias;
+}
+
+public function addMateria(Materias $materia): self
+{
+if (!$this->materias->contains($materia)) {
+$this->materias[] = $materia;
+$materia->addAlumno($this);
+}
+
+return $this;
+}
+
+public function removeMateria(Materias $materia): self
+{
+if ($this->materias->contains($materia)) {
+$this->materias->removeElement($materia);
+$materia->removeAlumno($this);
+}
+
+return $this;
+}
+
+public function __toString(){
+return $this->nombre;
+}
 
 }

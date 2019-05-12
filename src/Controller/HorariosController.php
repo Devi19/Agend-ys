@@ -41,20 +41,14 @@ class HorariosController extends AbstractController {
 	 */
 	public function nuevo(Request $request): Response {
 		$horario = new Horarios();
-		//$alumno= new Alumnos();
-		
-		$alumno= $this->getUser();
-//		dump($alumno_id);
-//		die();
-		
+		$alumno = $this->getUser();
+
 		$form = $this->createForm(HorariosType::class, $horario);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$horario->setIdAlumno($alumno);			
-//			dump($horario);
-//			die();
-			
+			$horario->setIdAlumno($alumno);
+//			
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($horario);
 			$entityManager->flush();
@@ -72,10 +66,16 @@ class HorariosController extends AbstractController {
 	 * @Route("/{id}/edit", name="horarios_edit", methods={"GET","POST"})
 	 */
 	public function edit(Request $request, Horarios $horario): Response {
-		$form = $this->createForm(HorariosType::class, $horario);
-		$form->handleRequest($request);
+//		dump($horario);
+//		die();
 
+		$form = $this->createForm(HorariosType::class, $horario);
+		
+		$form->handleRequest($request);
+		
 		if ($form->isSubmitted() && $form->isValid()) {
+
+			//$this->getDoctrine()->getManager()->persist();
 			$this->getDoctrine()->getManager()->flush();
 
 			return $this->redirectToRoute('horarios_index', [

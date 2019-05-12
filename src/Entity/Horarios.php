@@ -55,7 +55,7 @@ private $actividad;
  */
 private $idAlumno;
 
-public function getId(): ?int
+public function getId(): int
 {
 return $this->id;
 }
@@ -118,6 +118,9 @@ public function setIdAlumno(?Alumnos $idAlumno): self
 $this->idAlumno = $idAlumno;
 
 return $this;
+}
+public function __toString(){
+return $this->actividad;
 }
 
 }

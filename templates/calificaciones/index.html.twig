@@ -3,35 +3,68 @@
 {% block title %}Calificaciones index{% endblock %}
 
 {% block body %}
+	{% set array= [] %}
+	{% set i= 0 %}
+
+	{% for calificacione in calificaciones %}
+		{% if i==0 %}
+			{% set array= array|merge([calificacione.nombre]) %}	
+			{% set i= i+1 %}
+		{% elseif array[i-1] != calificacione.nombre %}
+			{% set array= array|merge([calificacione.nombre]) %}	
+			{% set i= i+1 %}
+		{% endif %}
+
+	{% endfor %}
+
+	{% set i= 0 %}
+	{% set breaks= 0 %}
+	{% set media= 0 %}
+
     <h1>Calificaciones index</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Materia</th>
+				<th>Ciclo</th>
+				<th>Nota</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for calificacione in calificaciones %}				
+				
+					<tr>				
+						<td>{{ calificacione.nombre}}</td>
+						<td>{{ calificacione.tipo }}</td>
+						<td>{{ calificacione.nota }}</td>
+						<td>
+							<a href="{{ path('calificaciones_show', {'idAlumno': calificacione.id_alumno}) }}">show</a>
+							<a href="{{ path('calificaciones_edit', {'idAlumno': calificacione.id_alumno}) }}">edit</a>
+						</td>						
+					</tr>							
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}			
+		</tbody>
+	</table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Materia</th>
-                <th>Ciclo</th>
-                <th>Nota</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for calificacione in calificaciones %}
-            <tr>
-                <td>{{ calificacione.nombre}}</td>
-                <td>{{ calificacione.tipo }}</td>
-                <td>{{ calificacione.nota }}</td>
-                <td>
-                    <a href="{{ path('calificaciones_show', {'idAlumno': calificacione.id_alumno}) }}">show</a>
-                    <a href="{{ path('calificaciones_edit', {'idAlumno': calificacione.id_alumno}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('calificaciones_new') }}">Create new</a>
+	<a href="{{ path('calificaciones_new') }}">Create new</a>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

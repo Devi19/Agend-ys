@@ -12,96 +12,99 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Calificaciones
 {
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="nota", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $nota;
+/**
+ * @var float
+ *
+ * @ORM\Column(name="nota", type="float", precision=10, scale=0, nullable=false)
+ */
+private $nota;
 
-    /**
-     * @var \Alumnos
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Alumnos")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id")
-     * })
-     */
-    private $idAlumno;
+/**
+ * @var \Alumnos
+ *
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="NONE")
+ * @ORM\OneToOne(targetEntity="Alumnos")
+ * @ORM\JoinColumns({
+ *   @ORM\JoinColumn(name="id_alumno", referencedColumnName="id")
+ * })
+ */
+private $idAlumno;
 
-    /**
-     * @var \Materias
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Materias")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_materia", referencedColumnName="id")
-     * })
-     */
-    private $idMateria;
+/**
+ * @var \Materias
+ *
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="NONE")
+ * @ORM\OneToOne(targetEntity="Materias")
+ * @ORM\JoinColumns({
+ *   @ORM\JoinColumn(name="id_materia", referencedColumnName="id")
+ * })
+ */
+private $idMateria;
 
-    /**
-     * @var \Ciclos
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Ciclos")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_ciclo", referencedColumnName="id")
-     * })
-     */
-    private $idCiclo;
+/**
+ * @var \Ciclos
+ *
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="NONE")
+ * @ORM\OneToOne(targetEntity="Ciclos")
+ * @ORM\JoinColumns({
+ *   @ORM\JoinColumn(name="id_ciclo", referencedColumnName="id")
+ * })
+ */
+private $idCiclo;
 
-    public function getNota(): ?float
-    {
-        return $this->nota;
-    }
+public function getNota(): ?float
+{
+return $this->nota;
+}
 
-    public function setNota(float $nota): self
-    {
-        $this->nota = $nota;
+public function setNota(float $nota): self
+{
+$this->nota = $nota;
 
-        return $this;
-    }
+return $this;
+}
 
-    public function getIdAlumno(): ?Alumnos
-    {
-        return $this->idAlumno;
-    }
+public function getIdAlumno(): ?Alumnos
+{
+return $this->idAlumno;
+}
 
-    public function setIdAlumno(?Alumnos $idAlumno): self
-    {
-        $this->idAlumno = $idAlumno;
+public function setIdAlumno(?Alumnos $idAlumno): self
+{
+$this->idAlumno = $idAlumno;
 
-        return $this;
-    }
+return $this;
+}
 
-    public function getIdMateria(): ?Materias
-    {
-        return $this->idMateria;
-    }
+public function getIdMateria(): ?Materias
+{
+return $this->idMateria;
+}
 
-    public function setIdMateria(?Materias $idMateria): self
-    {
-        $this->idMateria = $idMateria;
+public function setIdMateria(?Materias $idMateria): self
+{
+$this->idMateria = $idMateria;
 
-        return $this;
-    }
+return $this;
+}
 
-    public function getIdCiclo(): ?Ciclos
-    {
-        return $this->idCiclo;
-    }
+public function getIdCiclo(): ?Ciclos
+{
+return $this->idCiclo;
+}
 
-    public function setIdCiclo(?Ciclos $idCiclo): self
-    {
-        $this->idCiclo = $idCiclo;
+public function setIdCiclo(?Ciclos $idCiclo): self
+{
+$this->idCiclo = $idCiclo;
 
-        return $this;
-    }
+return $this;
+}
 
+public function __toString(){
+return $this->nota;
+}
 
 }

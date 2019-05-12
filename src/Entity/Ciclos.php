@@ -12,38 +12,41 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ciclos
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+/**
+ * @var int
+ *
+ * @ORM\Column(name="id", type="integer", nullable=false)
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="IDENTITY")
+ */
+private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tipo", type="string", length=50, nullable=false)
-     */
-    private $tipo;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="tipo", type="string", length=50, nullable=false)
+ */
+private $tipo;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+public function getId(): ?int
+{
+return $this->id;
+}
 
-    public function getTipo(): ?string
-    {
-        return $this->tipo;
-    }
+public function getTipo(): ?string
+{
+return $this->tipo;
+}
 
-    public function setTipo(string $tipo): self
-    {
-        $this->tipo = $tipo;
+public function setTipo(string $tipo): self
+{
+$this->tipo = $tipo;
 
-        return $this;
-    }
+return $this;
+}
 
+public function __toString(){
+return $this->tipo;
+}
 
 }

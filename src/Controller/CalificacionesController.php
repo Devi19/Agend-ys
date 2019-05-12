@@ -16,18 +16,16 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-
 /**
  * @Route("/calificaciones")
  */
-class CalificacionesController extends AbstractController
-{
-    /**
-     * @Route("/", name="calificaciones_index", methods={"GET"})
-     */
-    public function index(): Response
-    {
-        $id_alumno = $this->getUser()->getId();
+class CalificacionesController extends AbstractController {
+
+	/**
+	 * @Route("/", name="calificaciones_index", methods={"GET"})
+	 */
+	public function index(): Response {
+		$id_alumno = $this->getUser()->getId();
 
 		$em = $this->getDoctrine()->getManager();
 		$conn = $em->getConnection();
@@ -35,112 +33,162 @@ class CalificacionesController extends AbstractController
 					FROM calificaciones c, materias m, ciclos ci
 					WHERE c.id_alumno= :id_alumno 
                     AND c.id_materia= m.id 
-                    AND c.id_ciclo= ci.id 				
+                    AND c.id_ciclo= ci.id 	
+					ORDER BY m.nombre ASC 
                 ';
-                
+
 		$stmt = $conn->prepare($sql);
 		$stmt->execute(['id_alumno' => $id_alumno]);
 		$calificaciones = $stmt->fetchAll();
 
-        return $this->render('calificaciones/index.html.twig', [
-            'calificaciones' => $calificaciones,
-        ]);
-    }
+		return $this->render('calificaciones/index.html.twig', [
+					'calificaciones' => $calificaciones,
+		]);
+	}
 
-    /**
-     * @Route("/new", name="calificaciones_new", methods={"GET","POST"})
-     */
-    public function nuevo(Request $request): Response
-    {
-        $calificacione = new Calificaciones();
-        $alumno= $this->getUser()->getId();
-        //$materias= $alumno->getMaterias();
-        /* dump($materias);
-        die(); */
+	/**
+	 * @Route("/new", name="calificaciones_new", methods={"GET","POST"})
+	 */
+	public function nuevo(Request $request): Response {
+		$calificacione = new Calificaciones();
+		$alumno = $this->getUser();
+		//$materias = $alumno->getMaterias();
+//		dump($alumno->getId());
+//		die();
+//		$em = $this->getDoctrine()->getManager();
+//		$conn = $em->getConnection();
+//		
+//		$sql = ' SELECT m.nombre
+//				 FROM materias m, materias_alumnos ma		
+//				 WHERE ma.alumnos_id= :id_alumno
+//				 AND ma.materias_id= m.id 
+//				 ORDER BY m.nombre ASC 
+//                ';
+//
+//		$stmt = $conn->prepare($sql);
+//		$stmt->execute(['id_alumno' => $id_alumno]);		
+//		$materias = $stmt->fetchAll();
+//		$ciclos= new Ciclos();
+		//$ciclos_tipos= $calificacione->getIdCiclo();
+//		dump($materias);
+//		dump($materias);
+//		die();
+//
+//		$form = $this->createFormBuilder($calificacione)
+//				->add('idMateria', ChoiceType::class, [$materias])
+//				->add('nota', TextType::class)
+//				->add('Guardar', SubmitType::class)
+//				->getForm();
+		$form = $this->createForm(CalificacionesType::class, $calificacione);
+//		$form = $this->createFormBuilder($calificacione)
+//				->add('idMateria', EntityType::class, [
+//					'class' => Materias::class,
+//					'choices' => $alumno->getMaterias(),
+//					'choice_label' => 'nombre',
+//				])
+////			->add('idMateria', $materias)
+////				->add('idMateria', EntityType::class, [
+////					'class' => Materias::class,
+////					'choice_label' => 'nombre'
+////				])
+//				->add('idCiclo', EntityType::class, [
+//					'class' => Ciclos::class,
+//					'choice_label' => 'tipo'
+//				])
+//				->add('nota', TextType::class)
+////				->add('Guardar', SubmitType::class)
+//				->getForm();
 
-        //$form = $this->createForm(CalificacionesType::class, $calificacione);
-        $form= $this->createFormBuilder($calificacione)
-            ->add('idMateria', EntityType::class, [
-                'class' => Materias::class,
-                'query_builder' => function (EntityRepository $er){
-                    return $er->createQueryBuilder('m')
-                        ->andWhere('m.id = :id_alumno')
-                        ->setParameter('id_alumno', 1)
-                        ->getQuery()
-                        ->getOneOrNullResult();
-                },
-                'choice_label' => 'nombre'
-                ])
-            ->add('idCiclo', EntityType::class, [
-                'class' => Ciclos::class,
-                'choice_label' => 'tipo'
-                ])
-            ->add('nota', TextType::class)
-            ->add('Guardar', SubmitType::class, ['label' => 'Create Calificacion'])
-            ->getForm();
+		$form->handleRequest($request);
 
-        $form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+//			dump($form->getData());
+//			die();
+			$calificacione->setIdAlumno($alumno);
+			//$calificacione->setIdMateria($alumno);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            dump($form->getData());
-            die();
+			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager->persist($calificacione);
+			$entityManager->flush();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($calificacione);
-            $entityManager->flush();
+			return $this->redirectToRoute('calificaciones_new');
+		}
 
-            return $this->redirectToRoute('calificaciones_index');
-        }
+		return $this->render('calificaciones/new.html.twig', [
+					'form' => $form->createView(),
+		]);
+	}
 
-        return $this->render('calificaciones/new.html.twig', [
-            'calificacione' => $calificacione,
-            'form' => $form->createView(),
-        ]);
-    }
+	/**
+	 * @Route("/{idAlumno}", name="calificaciones_show", methods={"GET"})
+	 */
+	public function show(Calificaciones $calificacione): Response {
+		return $this->render('calificaciones/show.html.twig', [
+					'calificacione' => $calificacione,
+		]);
+	}
 
-    /**
-     * @Route("/{idAlumno}", name="calificaciones_show", methods={"GET"})
-     */
-    public function show(Calificaciones $calificacione): Response
-    {
-        return $this->render('calificaciones/show.html.twig', [
-            'calificacione' => $calificacione,
-        ]);
-    }
+	/**
+	 * @Route("/{idAlumno}/edit", name="calificaciones_edit", methods={"GET","POST"})
+	 */
+	public function edit(Request $request, Calificaciones $calificacione): Response {
+//		dump($calificacione);
+//		die();
+		//$calificaciones= new Calificaciones();
+//		$alumno = $this->getUser();
+//		$form = $this->createFormBuilder($calificacione)
+//				->add('idMateria', EntityType::class, [
+//					'class' => Materias::class,
+//					'choices' => $alumno->getMaterias(),
+//					'choice_label' => 'nombre',
+//				])
+//				->add('idCiclo', EntityType::class, [
+//					'class' => Ciclos::class,
+//					'choice_label' => 'tipo'
+//				])
+//				->add('nota', TextType::class)
+////				->add('Guardar', SubmitType::class)
+//				->getForm();
 
-    /**
-     * @Route("/{idAlumno}/edit", name="calificaciones_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Calificaciones $calificacione): Response
-    {
-        $form = $this->createForm(CalificacionesType::class, $calificacione);
-        $form->handleRequest($request);
+		$form = $this->createForm(CalificacionesType::class, $calificacione);
+//		dump($form);
+//		die();
+		$form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('calificaciones_index', [
-                'idAlumno' => $calificacione->getIdAlumno(),
-            ]);
-        }
+		if ($form->isSubmitted() && $form->isValid()) {
+//			dump($form);
+//			die();
 
-        return $this->render('calificaciones/edit.html.twig', [
-            'calificacione' => $calificacione,
-            'form' => $form->createView(),
-        ]);
-    }
+			$this->getDoctrine()->getManager()->flush();
 
-    /**
-     * @Route("/{idAlumno}", name="calificaciones_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Calificaciones $calificacione): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$calificacione->getIdAlumno(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($calificacione);
-            $entityManager->flush();
-        }
+			return $this->redirectToRoute('calificaciones_index', [
+						'idAlumno' => $calificacione->getIdAlumno(),
+			]);
+		}
 
-        return $this->redirectToRoute('calificaciones_index');
-    }
+		return $this->render('calificaciones/edit.html.twig', [
+					'calificacione' => $calificacione,
+					'form' => $form->createView(),
+		]);
+	}
+
+	/**
+	 * @Route("/{idAlumno}/delete", name="calificaciones_delete", methods={"GET","POST","DELETE"})
+	 */
+	public function delete(Request $request, Calificaciones $calificacione): Response {
+
+		$entityManager = $this->getDoctrine()->getManager();
+		$entityManager->remove($calificacione);
+		$entityManager->flush();
+
+//		if ($this->isCsrfTokenValid('delete' . $calificacione->getIdAlumno(), $request->request->get('_token'))) {
+//			$entityManager = $this->getDoctrine()->getManager();
+//			$entityManager->remove($calificacione);
+//			$entityManager->flush();
+//		}
+
+		return $this->redirectToRoute('calificaciones_index');
+	}
+
 }

@@ -8,6 +8,8 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Materia</th>
+                <th>Ciclo</th>
                 <th>Nota</th>
                 <th>actions</th>
             </tr>
@@ -15,7 +17,10 @@
         <tbody>
         {% for calificacione in calificaciones %}
             <tr>
+                <td>{{ calificacione.idMateria }}</td>
+                <td>{{ calificacione.idCiclo }}</td>
                 <td>{{ calificacione.nota }}</td>
+                
                 <td>
                     <a href="{{ path('calificaciones_show', {'idAlumno': calificacione.idAlumno}) }}">show</a>
                     <a href="{{ path('calificaciones_edit', {'idAlumno': calificacione.idAlumno}) }}">edit</a>

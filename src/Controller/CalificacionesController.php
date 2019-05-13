@@ -8,8 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 /**
  * @Route("/calificaciones")
  */
@@ -53,8 +55,7 @@ class CalificacionesController extends AbstractController
     }
 
     /**
-     * @Route("/{idAlumno}", name="calificaciones_show", methods={"GET"})
-     * @ParamConverter("Calificaciones", options={"id" = "idAlumno"})
+     * @Route("/{idAlumno}", name="calificaciones_show", methods={"POST",GET"})   
      */
     public function show(Calificaciones $calificacione): Response
     {

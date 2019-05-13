@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -102,6 +103,10 @@ class Calificaciones
 
         return $this;
     }
+
+    /* public function __toString(){
+        return $this->idMateria;
+    } */
 
 
 }

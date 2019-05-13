@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="alumnos", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
  * @ORM\Entity
  */
-class Alumnos
+class Alumnos implements UserInterface
 {
     /**
      * @var int
@@ -86,6 +87,26 @@ class Alumnos
      * @ORM\ManyToMany(targetEntity="Materias", mappedBy="alumnos")
      */
     private $materias;
+
+    //LOGIN
+    //Necesario implementacion de estos métodos para la autenticación de alumnos
+
+    public function getUsername(){
+    return $this->email;
+    }
+    
+    public function getSalt(){
+    return null;
+    }
+    
+    public function getRoles(){
+    return array($this->getRole());
+    }
+    
+    public function eraseCredentials(){
+    
+    }
+    //Fin LOGIN
 
     /**
      * Constructor
@@ -228,7 +249,7 @@ class Alumnos
     }
     public function __toString()
     {
-        return $this->nombre;
+        return (string) $this->id;
     }
 
 }

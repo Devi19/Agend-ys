@@ -8,7 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Calificaciones
  *
+<<<<<<< HEAD
  * @ORM\Table(name="calificaciones", indexes={@ORM\Index(name="id_materia", columns={"id_materia"}), @ORM\Index(name="id_alumno", columns={"id_alumno"}), @ORM\Index(name="id_ciclo", columns={"id_ciclo"})})
+=======
+ * @ORM\Table(name="calificaciones", indexes={@ORM\Index(name="IDX_41F72CC8320260C0", columns={"id_alumno"}), @ORM\Index(name="id_materia", columns={"id_materia"}), @ORM\Index(name="id_ciclo", columns={"id_ciclo"})})
+>>>>>>> 2d3c067c46c65c8f367c22109bf0ef2ea7ed39fe
  * @ORM\Entity
  */
 class Calificaciones
@@ -103,10 +107,13 @@ class Calificaciones
 
         return $this;
     }
+<<<<<<< HEAD
 
     /* public function __toString(){
         return $this->idMateria;
     } */
+=======
+>>>>>>> 2d3c067c46c65c8f367c22109bf0ef2ea7ed39fe
 
 
 }

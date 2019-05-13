@@ -20,41 +20,82 @@
 	{% set i= 0 %}
 	{% set breaks= 0 %}
 	{% set media= 0 %}
+	
+    <main class='main-content bgc-grey-100'>
+        <div id='mainContent'>
+            <div class="container-fluid">
+                <h4 class="c-grey-900 mT-10 mB-30">Tus Calificaciones</h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bgc-white bd bdrs-3 p-20 mB-20">							
+                            <table class="table table-striped table-hover" cellspacing="0" width="80%">
+                                <thead>
+                                    <tr>
+                                        <th>Materia</th>
+										<th>Ciclo</th>
+										<th>Nota</th>
+										<th>actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='tbody'>
+									{% for calificacione in calificaciones %}				
+										{% if calificacione.nombre == array[i] %}
+											<tr>				
+												<td>{{ calificacione.nombre}}</td>
+												<td>{{ calificacione.tipo }}</td>
+												<td>{{ calificacione.nota }}</td>
+												<td>
+													<a class= 'btn btn danger' href="{{ path('calificaciones_delete', {'idAlumno': calificacione.id_alumno}) }}"><i class='fa fa-trash-o fa-lg'></i></a>
+													<a href="{{ path('calificaciones_edit', {'idAlumno': calificacione.id_alumno}) }}"><i class='fa fa-pencil fa-lg'></i></a>
+												</td>
+												{% set breaks= breaks+1 %}
+												{% set media= media + calificacione.nota %}
+											</tr>					
+										{% else %}
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>Media:  {{media / breaks}}</td>	
+												{% set breaks= 0 %}
+												{% set media= 0 %}
+												{% set i= i+1 %}
+											</tr>
+											<tr>				
+												<td>{{ calificacione.nombre}}</td>
+												<td>{{ calificacione.tipo }}</td>
+												<td>{{ calificacione.nota }}</td>
+												<td>
+													<a class= 'btn btn danger' href="{{ path('calificaciones_delete', {'idAlumno': calificacione.id_alumno}) }}"><i class='fa fa-trash-o fa-lg'></i></a>
+													<a href="{{ path('calificaciones_edit', {'idAlumno': calificacione.id_alumno}) }}"><i class='fa fa-pencil fa-lg'></i></a>
+												</td>
+												{% set breaks= breaks+1 %}
+												{% set media= media + calificacione.nota %}
+											</tr>
+										{% endif %}				
+									{% else %}
+										<tr>
+											<td colspan="4">no has creado ninguna calificación</td>
+										</tr>
+									{% endfor %}
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>Media:  {{media / breaks}}</td>				
+									</tr>                                                                                     
+                                </tbody>
+                            </table><br/>
+                            <a href="{{ path('calificaciones_new') }}"><i class='fa fa-plus-square fa-2x'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <h1>Calificaciones index</h1>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Materia</th>
-				<th>Ciclo</th>
-				<th>Nota</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for calificacione in calificaciones %}				
-				
-					<tr>				
-						<td>{{ calificacione.nombre}}</td>
-						<td>{{ calificacione.tipo }}</td>
-						<td>{{ calificacione.nota }}</td>
-						<td>
-							<a href="{{ path('calificaciones_show', {'idAlumno': calificacione.id_alumno}) }}">show</a>
-							<a href="{{ path('calificaciones_edit', {'idAlumno': calificacione.id_alumno}) }}">edit</a>
-						</td>						
-					</tr>							
-			{% else %}
-				<tr>
-					<td colspan="4">no records found</td>
-				</tr>
-			{% endfor %}			
-		</tbody>
-	</table>
+    </main>
 
-	<a href="{{ path('calificaciones_new') }}">Create new</a>
 {% endblock %}
-
-
 
 
 

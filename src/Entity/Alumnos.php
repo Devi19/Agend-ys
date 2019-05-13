@@ -250,7 +250,7 @@ return $this;
 }
 
 public function __toString(){
-return (string)$this->nombre;
+return (string)$this->id;
 }
 
 }

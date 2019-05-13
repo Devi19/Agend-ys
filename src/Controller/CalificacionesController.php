@@ -79,25 +79,25 @@ class CalificacionesController extends AbstractController {
 //				->add('nota', TextType::class)
 //				->add('Guardar', SubmitType::class)
 //				->getForm();
-		$form = $this->createForm(CalificacionesType::class, $calificacione);
-//		$form = $this->createFormBuilder($calificacione)
+//		$form = $this->createForm(CalificacionesType::class, $calificacione);
+		$form = $this->createFormBuilder($calificacione)
+				->add('idMateria', EntityType::class, [
+					'class' => Materias::class,
+					'choices' => $alumno->getMaterias(),
+					'choice_label' => 'nombre',
+				])
+//			->add('idMateria', $materias)
 //				->add('idMateria', EntityType::class, [
 //					'class' => Materias::class,
-//					'choices' => $alumno->getMaterias(),
-//					'choice_label' => 'nombre',
+//					'choice_label' => 'nombre'
 //				])
-////			->add('idMateria', $materias)
-////				->add('idMateria', EntityType::class, [
-////					'class' => Materias::class,
-////					'choice_label' => 'nombre'
-////				])
-//				->add('idCiclo', EntityType::class, [
-//					'class' => Ciclos::class,
-//					'choice_label' => 'tipo'
-//				])
-//				->add('nota', TextType::class)
-////				->add('Guardar', SubmitType::class)
-//				->getForm();
+				->add('idCiclo', EntityType::class, [
+					'class' => Ciclos::class,
+					'choice_label' => 'tipo'
+				])
+				->add('nota', TextType::class)
+//				->add('Guardar', SubmitType::class)
+				->getForm();
 
 		$form->handleRequest($request);
 

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editar Materia{% endblock %}
+{% block title %}Edit Horarios{% endblock %}
 
 {% block body %}
     <h1>Edit Horarios</h1>
 
-    {{ include('horarios/_form.html.twig', {'button_label': 'Actualizar'}) }}
+    {{ include('horarios/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('horarios_index') }}"><i class='fa fa-reply-all fa-2x'></i></a>
-    
+    <a href="{{ path('horarios_index') }}">back to list</a>
+
     {{ include('horarios/_delete_form.html.twig') }}
 {% endblock %}

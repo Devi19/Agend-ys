@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Alumnos
@@ -108,7 +108,6 @@ public function eraseCredentials(){
 
 }
 //Fin LOGIN
-
 
 /**
  * Constructor
@@ -251,7 +250,7 @@ return $this;
 }
 
 public function __toString(){
-return $this->nombre;
+return (string)$this->nombre;
 }
 
 }

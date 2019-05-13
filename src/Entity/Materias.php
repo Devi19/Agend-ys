@@ -14,90 +14,90 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Materias
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+/**
+ * @var int
+ *
+ * @ORM\Column(name="id", type="integer", nullable=false)
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="IDENTITY")
+ */
+private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
-     */
-    private $nombre;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+ */
+private $nombre;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Alumnos", inversedBy="materias")
-     * @ORM\JoinTable(name="materias_alumnos",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="materias_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="alumnos_id", referencedColumnName="id")
-     *   }
-     * )
-     */
-    private $alumnos;
+/**
+ * @var \Doctrine\Common\Collections\Collection
+ *
+ * @ORM\ManyToMany(targetEntity="Alumnos", inversedBy="materias")
+ * @ORM\JoinTable(name="materias_alumnos",
+ *   joinColumns={
+ *     @ORM\JoinColumn(name="materias_id", referencedColumnName="id")
+ *   },
+ *   inverseJoinColumns={
+ *     @ORM\JoinColumn(name="alumnos_id", referencedColumnName="id")
+ *   }
+ * )
+ */
+private $alumnos;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+/**
+ * Constructor
+ */
+public function __construct()
+{
+$this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
+}
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+public function getId(): ?int
+{
+return $this->id;
+}
 
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
+public function getNombre(): ?string
+{
+return $this->nombre;
+}
 
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
+public function setNombre(string $nombre): self
+{
+$this->nombre = $nombre;
 
-        return $this;
-    }
+return $this;
+}
 
-    /**
-     * @return Collection|Alumnos[]
-     */
-    public function getAlumnos(): Collection
-    {
-        return $this->alumnos;
-    }
+/**
+ * @return Collection|Alumnos[]
+ */
+public function getAlumnos(): Collection
+{
+return $this->alumnos;
+}
 
-    public function addAlumno(Alumnos $alumno): self
-    {
-        if (!$this->alumnos->contains($alumno)) {
-            $this->alumnos[] = $alumno;
-        }
+public function addAlumno(Alumnos $alumno): self
+{
+if (!$this->alumnos->contains($alumno)) {
+$this->alumnos[] = $alumno;
+}
 
-        return $this;
-    }
+return $this;
+}
 
-    public function removeAlumno(Alumnos $alumno): self
-    {
-        if ($this->alumnos->contains($alumno)) {
-            $this->alumnos->removeElement($alumno);
-        }
+public function removeAlumno(Alumnos $alumno): self
+{
+if ($this->alumnos->contains($alumno)) {
+$this->alumnos->removeElement($alumno);
+}
 
-        return $this;
-    }
-	
-	public function __toString(){
-        return $this->nombre;
-    }
+return $this;
+}
+
+public function __toString(){
+return $this->nombre;
+}
 
 }
